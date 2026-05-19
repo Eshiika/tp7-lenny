@@ -1,0 +1,54 @@
+package fr.ekod.cda.ja.tp7.controller;
+
+import fr.ekod.cda.ja.tp7.dto.director.CreateDirectorDTO;
+import fr.ekod.cda.ja.tp7.dto.director.DirectorDTO;
+import fr.ekod.cda.ja.tp7.service.DirectorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
+public class DirectorController {
+
+    private final DirectorService directorService;
+
+    public DirectorController(DirectorService directorService) {
+        this.directorService = directorService;
+    }
+
+    @GetMapping("/directors")
+    public ResponseEntity<List<DirectorDTO>> findAll() {
+        return ResponseEntity.ok(directorService.findAll());
+    }
+
+    @GetMapping("/directors/{id}")
+    public ResponseEntity<DirectorDTO> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(directorService.findById(id));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/directors")
+    public ResponseEntity<DirectorDTO> createDirector(@RequestBody CreateDirectorDTO dto) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(directorService.createDirector(dto));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/directors/{id}")
+    public ResponseEntity<DirectorDTO> updateDirector(@PathVariable Integer id, @RequestBody CreateDirectorDTO dto) {
+        return ResponseEntity.ok(directorService.updateDirector(id, dto));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/directors/{id}")
+    public ResponseEntity<Void> deleteDirector(@PathVariable Integer id) {
+        directorService.deleteDirector(id);
+        return ResponseEntity.noContent().build();
+    }
+
+}
