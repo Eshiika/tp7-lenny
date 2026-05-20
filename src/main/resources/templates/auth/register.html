@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Inscription</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="auth-page">
+<a class="back-link" th:href="@{/}">Retour accueil</a>
+<div class="auth-overlay">
+    <div class="auth-card">
+        <h1>Inscription</h1>
+
+        <form th:action="@{/register}" th:object="${registerRequest}" method="post">
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" th:field="*{lastName}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" th:field="*{firstName}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" th:field="*{password}" required>
+            </div>
+
+            <button type="submit">Créer mon compte</button>
+        </form>
+
+        <p class="auth-link">
+            Déjà un compte ?
+            <a th:href="@{/login}">Se connecter</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

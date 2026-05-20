@@ -42,20 +42,36 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) ->
-                                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized")
-                        )
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            if (request.getRequestURI().startsWith("/api/")) {
+                                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
+                            } else {
+                                response.sendRedirect("/login");
+                            }
+                        })
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
                                 response.setStatus(HttpStatus.FORBIDDEN.value());
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
+                        // --- Règles /api/** du TP7 : INCHANGÉES ---
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/movies", "/api/movies/**", "/api/directors", "/api/directors/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/movies/**", "/api/directors/**").permitAll()
+
+                        // --- Pages web publiques ---
+                        .requestMatchers("/", "/css/**", "/register", "/login", "/logout").permitAll()
+
+                        // --- Pages web réservées aux ADMIN (règle la plus spécifique EN PREMIER) ---
+                        .requestMatchers("/movies/new").hasRole("ADMIN")
+
+                        // --- Pages web protégées : nécessitent d'être connecté ---
+                        .requestMatchers("/movies/**", "/directors/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

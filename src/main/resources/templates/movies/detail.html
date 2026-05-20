@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Détail du film</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="detail-page">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="detail-card">
+    <a class="back-link" th:href="@{/movies}">Retour aux films</a>
+
+    <h1 th:text="${movie.title}"></h1>
+
+    <p class="synopsis" th:text="${movie.synopsis}"></p>
+
+    <div class="info">
+        <p><strong>Année :</strong> <span th:text="${movie.releaseYear}"></span></p>
+        <p><strong>Genre :</strong> <span th:text="${movie.genre}"></span></p>
+        <p><strong>Durée :</strong> <span th:text="${movie.durationMinutes + ' minutes'}"></span></p>
+        <p><strong>Réalisateur :</strong> <a th:href="@{/directors/{id}(id=${movie.director.id})}" th:text="${movie.director.firstName + ' ' + movie.director.lastName}"></a></p>
+    </div>
+</div>
+
+</body>
+</html>

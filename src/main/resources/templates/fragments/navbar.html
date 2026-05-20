@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="fr">
+<body>
+<nav th:fragment="navbar" class="navbar">
+    <a class="navbar-logo" th:href="@{/}">MovieApp</a>
+
+    <div class="navbar-links">
+        <span>
+            <a th:href="@{/}">Accueil</a>
+            <a th:href="@{/movies}">Films</a>
+            <a th:href="@{/directors}">Réalisateurs</a>
+        </span>
+
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Déconnexion</a>
+        </span>
+
+        <span sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}">Connexion</a>
+            <a th:href="@{/register}">Inscription</a>
+        </span>
+    </div>
+</nav>
+
+</body>
+</html>

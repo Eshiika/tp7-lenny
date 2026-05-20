@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Accueil</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="home-page">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="hero">
+    <div class="hero-content">
+        <h1>Bienvenue sur MovieApp</h1>
+        <p>Découvrez vos films, consultez les réalisateurs et gérez votre catalogue.</p>
+
+        <div class="hero-actions">
+            <a class="btn btn-primary" th:href="@{/movies}">Voir les films</a>
+            <a class="btn btn-secondary" th:href="@{/directors}">Voir les réalisateurs</a>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

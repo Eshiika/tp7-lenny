@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Liste des réalisateurs</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="directors-list-page">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="header">
+    <h1>Liste des réalisateurs</h1>
+    <button sec:authorize="hasRole('ADMIN')" class="add-button" onclick="openDirectorModal()">Ajouter un réalisateur</button>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Nationalité</th>
+        <th>Date de naissance</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="director : ${directors}" th:onclick="|window.location='/directors/${director.id}'|" class="movie-row">
+        <td th:text="${director.firstName}"></td>
+        <td th:text="${director.lastName}"></td>
+        <td th:text="${director.nationality}"></td>
+        <td th:text="${director.birthDate}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="directorModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeDirectorModal()">×</button>
+
+        <h2>Ajouter un réalisateur</h2>
+
+        <form th:action="@{/directors/new}" method="post">
+            <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" name="firstName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" name="lastName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Nationalité</label>
+                <input type="text" name="nationality">
+            </div>
+
+            <div class="form-group">
+                <label>Date de naissance</label>
+                <input type="date" name="birthDate">
+            </div>
+
+            <button type="submit">Créer</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openDirectorModal() {
+        document.getElementById("directorModal").style.display = "flex";
+    }
+
+    function closeDirectorModal() {
+        document.getElementById("directorModal").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

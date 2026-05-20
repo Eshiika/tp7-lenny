@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Ajouter un film</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="movie-form-page">
+
+<div class="movie-form-card">
+    <h1>Ajouter un film</h1>
+
+    <form th:action="@{/movies/new}" th:object="${movieForm}" method="post">
+        <div class="form-group">
+            <label>Titre</label>
+            <input type="text" th:field="*{title}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Année</label>
+            <input type="number" th:field="*{releaseYear}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Durée en minutes</label>
+            <input type="number" th:field="*{durationMinutes}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Genre</label>
+            <input type="text" th:field="*{genre}">
+        </div>
+
+        <div class="form-group">
+            <label>Synopsis</label>
+            <textarea th:field="*{synopsis}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Réalisateur</label>
+            <select th:field="*{directorId}" required>
+                <option value="">Choisir un réalisateur</option>
+                <option th:each="director : ${directors}"
+                        th:value="${director.id}"
+                        th:text="${director.firstName + ' ' + director.lastName}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit">Créer le film</button>
+    </form>
+
+    <a class="back-link" th:href="@{/movies}">Retour aux films</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="fr">
+<head>
+    <title>Liste des films</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="movies-list-page">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="header">
+    <h1>Liste des films</h1>
+    <a sec:authorize="hasRole('ADMIN')" class="new-movie" th:href="@{/movies/new}">Ajouter un film</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Titre</th>
+        <th>Année</th>
+        <th>Genre</th>
+        <th>Réalisateur</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="movie : ${movies}" th:onclick="|window.location='/movies/${movie.id}'|" class="movie-row">
+        <td th:text="${movie.title}"></td>
+        <td th:text="${movie.releaseYear}"></td>
+        <td th:text="${movie.genre}"></td>
+        <td th:text="${movie.directorFullName}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

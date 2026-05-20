@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Détail d'un réalisateur</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="detail-page">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="detail-card">
+    <h1 th:text="${director.firstName + ' ' + director.lastName}"></h1>
+
+    <div class="info">
+        <p><strong>Nationalité :</strong> <span th:text="${director.nationality}"></span></p>
+        <p><strong>Date de naissance :</strong> <span th:text="${director.birthDate}"></span></p>
+    </div>
+</div>
+
+</body>
+</html>
