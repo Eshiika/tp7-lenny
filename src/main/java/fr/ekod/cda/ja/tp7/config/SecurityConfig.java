@@ -64,7 +64,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/movies/**", "/api/directors/**").permitAll()
 
                         // --- Pages web publiques ---
-                        .requestMatchers("/", "/css/**", "/register", "/login", "/logout").permitAll()
+                        .requestMatchers("/", "/css/**", "/register", "/login", "/logout", "/swagger-ui/**", "/v3/api-docs").permitAll()
 
                         // --- Pages web réservées aux ADMIN (règle la plus spécifique EN PREMIER) ---
                         .requestMatchers("/movies/new").hasRole("ADMIN")

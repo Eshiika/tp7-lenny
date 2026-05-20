@@ -5,6 +5,7 @@ import fr.ekod.cda.ja.tp7.dto.movie.MovieDTO;
 import fr.ekod.cda.ja.tp7.dto.movie.MovieSummaryDTO;
 import fr.ekod.cda.ja.tp7.dto.movie.UpdateMovieDTO;
 import fr.ekod.cda.ja.tp7.service.MovieService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Film")
 public class MovieController {
 
     private final MovieService movieService;

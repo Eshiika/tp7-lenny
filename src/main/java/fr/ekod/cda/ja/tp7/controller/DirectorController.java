@@ -3,6 +3,7 @@ package fr.ekod.cda.ja.tp7.controller;
 import fr.ekod.cda.ja.tp7.dto.director.CreateDirectorDTO;
 import fr.ekod.cda.ja.tp7.dto.director.DirectorDTO;
 import fr.ekod.cda.ja.tp7.service.DirectorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Réalisateur")
 public class DirectorController {
 
     private final DirectorService directorService;
