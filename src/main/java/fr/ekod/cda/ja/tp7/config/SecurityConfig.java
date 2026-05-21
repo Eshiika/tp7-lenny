@@ -48,11 +48,7 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) -> {
-                            if (request.getRequestURI().startsWith("/api/")) {
-                                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
-                            } else {
-                                response.sendRedirect("/login");
-                            }
+                            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
                         })
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
                                 response.setStatus(HttpStatus.FORBIDDEN.value());
