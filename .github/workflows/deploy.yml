@@ -24,12 +24,21 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+        env:
+          DB_NAME: cineclubdb
+          DB_USERNAME: cineclubuser
+          DB_PASSWORD: cineclubpwd
+          DB_HOST: localhost
+          DB_PORT: 5440
+          JWT_SECRET: uneCleSuperSecreteDAuMoins256BitsAChangerEnProd
+          JWT_ACCESS_EXPIRATION: 900000
+          JWT_REFRESH_EXPIRATION: 604800000
 
       - name: Run tests
-        run: mvn test -DskipTests
+        run: mvn test
 
       - name: Build JAR
-        run: mvn package -DskipTests
+        run: mvn package
 
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
